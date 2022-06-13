@@ -4,3 +4,10 @@
 .justify-space-between {
     justify-content: space-between;
 }
+.text-xxl {
+    font-size: 2rem;
+}
+header {
+    text-align: center;
+    background-color: lightblue !important;
+}

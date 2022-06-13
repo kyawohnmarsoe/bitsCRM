@@ -20,9 +20,7 @@ use Dompdf\Dompdf;
 
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/', function () {
-        return redirect()->route('payments.index');
-    })->name('dashboard');
+    Route::get('/', [PaymentController::class, 'today'])->name('dashboard');
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
@@ -39,22 +37,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/payments/update/{payment}', [PaymentController::class, 'update'])->name('payments.update');
     Route::delete('/payments/delete/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
 
+    Route::post('/customers', [CustomerController::class, 'find'])->name('customers.find');
+    Route::post('/customers/findname', [CustomerController::class, 'findname'])->name('customers.findname');
+    Route::post('/customers/downloadpdf', [CustomerController::class, 'downloadpdf'])->name('customers.downloadpdf');
+
+    Route::post('/payments', [PaymentController::class, 'find'])->name('payments.find');
+    Route::post('/payments/downloadpdf', [PaymentController::class, 'downloadpdf'])->name('payments.downloadpdf');
+
+
 });
 
 // Route::resource('customers', CustomerController::class);
 // Route::resource('payments', PaymentController::class);
 
-Route::post('/customers', [CustomerController::class, 'find'])->name('customers.find');
-Route::post('/customers/downloadpdf', [CustomerController::class, 'downloadpdf'])->name('customers.downloadpdf');
-
-Route::post('/payments', [PaymentController::class, 'find'])->name('payments.find');
-Route::post('/payments/downloadpdf', [PaymentController::class, 'downloadpdf'])->name('payments.downloadpdf');
-
-Route::get('/pdf', function () {
-    $all_payments = session('all_payments');
-    $payments = $all_payments;
-    return view('payments.pdf',compact('payments','all_payments'));
-})->name('dashboard');
 
 require __DIR__.'/auth.php';
 

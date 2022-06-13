@@ -25,34 +25,49 @@
                             </div>
                            
                             <div class="flex items-center justify-end " >
-                               {{-- Search Form  --}}
-                              <form method="POST" action="{{ route('customers.find') }}">
+                              <form method="POST" action="{{ route('customers.findname') }}" >
                                 @method('POST')
                                 @csrf
                                 <div class="flex items-center justify-space-between ">
-                                <span >Start :</span> 
-                                <x-input 
-                                    value="2022-06-23"
-                                    max="2022-06-15" 
-                                    id="start_date" class="block mt-1 w-half ml-3" type="date" name="start_date" :value="old('start_date')" required autofocus/>
-                             <span class="ml-3" >End :</span> 
-                             <x-input 
-                                    max="2022-06-15" 
-                                    max="2022-06-15" 
-                                    id="end_date" class="block mt-1 w-half ml-3" type="date" name="end_date" :value="old('end_date')" required autofocus/>
+                                <span > Name:</span> 
+                                
+                             <x-input id="find_name" class="block mt-1 w-half ml-3" type="text" name="find_name" :value="old('find_name')" required autofocus/>
                             
                                 <x-button class="ml-3">
                                     {{ __('Find') }}
                                 </x-button>
                                 </div>
                               </form>
+
+                              <a href="{{ route('customers.index') }}" class="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                               
+                                {{ __('Reset') }}
+                          </a>
+
+
+                               {{-- Search Form  --}}
+                              <form method="POST" action="{{ route('customers.find') }}" style="display: none;">
+                                @method('POST')
+                                @csrf
+                                <div class="flex items-center justify-space-between ">
+                                <span >Start :</span> 
+                                <x-input id="start_date" class="block mt-1 w-half ml-3" type="date" name="start_date" :value="old('start_date')" required autofocus/>
+                             <span class="ml-3" >End :</span> 
+                             <x-input id="end_date" class="block mt-1 w-half ml-3" type="date" name="end_date" :value="old('end_date')" required autofocus/>
+                            
+                                <x-button class="ml-3">
+                                    {{ __('Find') }}
+                                </x-button>
+                                </div>
+                              </form>
+
+                              
                             {{-- Search Form  --}}
 
 
                             <form method="POST" action="{{ route('customers.downloadpdf') }}" style="display: none;">
                               @method('POST')
                               @csrf
-                              <input type="hidden" value=" {{ json_encode($all_customers) }}" name="all_customers"/>
                               <x-button class="ml-3">
                                 {{ __('Download') }}
                             </x-button>

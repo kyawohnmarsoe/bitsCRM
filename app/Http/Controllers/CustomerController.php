@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Dompdf\Dompdf;
 use App\Http\Requests\StoreCustomerRequest;
+use Illuminate\Support\Facades\DB;
 
 
 class CustomerController extends Controller
@@ -26,6 +27,15 @@ class CustomerController extends Controller
         // return $all_customers;
 
         return view('customers.index',compact('customers','all_customers'));
+    }
+
+    public function findname(Request $request){
+        $find_name = $request->input('find_name');
+        $all_customers = Customer::where('name','LIKE','%'.$find_name.'%')->orderBy('id', 'asc')->get();
+        $customers = Customer::where('name','LIKE','%'.$find_name.'%')->orderBy('id', 'asc')->paginate(3);
+
+        return view('customers.index',compact('customers','all_customers'));
+
     }
 
     public function find(Request $request){

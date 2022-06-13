@@ -18,6 +18,19 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function today(Request $request)
+    {
+        // $all_payments = Payment::orderBy('id', 'desc')->with('customer')->get();
+        $all_payments = Payment::whereDate('payment_date', Carbon::today())->orderBy('id', 'desc')->with('customer')->get();
+        $payments = Payment::whereDate('payment_date', Carbon::today())->orderBy('id', 'desc')->with('customer')->paginate(3);
+
+        $total = $all_payments->sum('amount');
+        $request->session()->put('all_payments', $all_payments);
+
+        return view('dashboard',compact('payments','all_payments','total'));
+    }
+
+
     public function index(Request $request)
     {
         $all_payments = Payment::orderBy('id', 'desc')->with('customer')->get();
@@ -29,19 +42,36 @@ class PaymentController extends Controller
 
         return view('payments.index',compact('payments','all_payments'));
     }
-    
+
     public function find(Request $request){
 
-        $start_date = Carbon::parse($request->input('start_date'))->startOfDay();
-        $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
 
-        $all_payments = Payment::whereBetween('created_at', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->get();
-        $payments = Payment::whereBetween('created_at', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->paginate(3);
+        $all_payments = Payment::whereBetween('payment_date', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->get();
+        $payments = Payment::whereBetween('payment_date', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->paginate(3);
         $request->session()->put('all_payments', $all_payments);
+
+        // return $all_payments;
 
         return view('payments.index',compact('payments','all_payments'));
 
     }
+    
+    // public function find(Request $request){
+
+    //     $start_date = Carbon::parse($request->input('start_date'))->startOfDay();
+    //     $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
+
+    //     $all_payments = Payment::whereBetween('payment_date', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->get();
+    //     $payments = Payment::whereBetween('payment_date', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->paginate(3);
+    //     $request->session()->put('all_payments', $all_payments);
+
+    //     return $all_payments;
+
+    //     return view('payments.index',compact('payments','all_payments'));
+
+    // }
 
 
     public function downloadpdf (){
