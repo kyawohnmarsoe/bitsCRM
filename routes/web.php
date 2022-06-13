@@ -50,6 +50,11 @@ Route::post('/customers/downloadpdf', [CustomerController::class, 'downloadpdf']
 Route::post('/payments', [PaymentController::class, 'find'])->name('payments.find');
 Route::post('/payments/downloadpdf', [PaymentController::class, 'downloadpdf'])->name('payments.downloadpdf');
 
+Route::get('/pdf', function () {
+    $all_payments = session('all_payments');
+    $payments = $all_payments;
+    return view('payments.pdf',compact('payments','all_payments'));
+})->name('dashboard');
 
 require __DIR__.'/auth.php';
 
