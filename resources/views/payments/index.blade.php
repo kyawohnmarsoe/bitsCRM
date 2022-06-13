@@ -47,14 +47,13 @@
                          {{-- Search Form  --}}
 
 
-                         {{-- <form method="POST" action="{{ route('payments.downloadpdf') }}">
+                         <form method="POST" action="{{ route('payments.downloadpdf') }}">
                            @method('POST')
                            @csrf
-                           <input type="text" value=" {{ json_encode($all_payments) }}" name="all_payments"/>
-                           <x-button class="ml-3">
+                              <x-button class="ml-3">
                              {{ __('Download') }}
                          </x-button>
-                         </form> --}}
+                         </form>
 
                         
                          

@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Dompdf\Dompdf;
 use App\Http\Requests\StorePaymentRequest;
 
-// class AllPaymentData {
-//     public $all_payments_data;
-//     public function __construct($all_payments_data) {
-//         $this->all_payments = $all_payments_data;
-//     }
-
-// }
-
 class PaymentController extends Controller
 {
     /**
@@ -25,13 +17,15 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   
-    public function index()
+
+    public function index(Request $request)
     {
         $all_payments = Payment::orderBy('id', 'desc')->with('customer')->get();
         $payments = Payment::orderBy('id', 'desc')->paginate(3);
 
-        // return gettype($all_payments);
+        $request->session()->put('all_payments', $all_payments);
+        
+        // return session('all_payments');
 
         return view('payments.index',compact('payments','all_payments'));
     }
@@ -43,6 +37,7 @@ class PaymentController extends Controller
 
         $all_payments = Payment::whereBetween('created_at', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->get();
         $payments = Payment::whereBetween('created_at', [$start_date, $end_date])->orderBy('id', 'desc')->with('customer')->paginate(3);
+        $request->session()->put('all_payments', $all_payments);
 
         return view('payments.index',compact('payments','all_payments'));
 
@@ -51,8 +46,14 @@ class PaymentController extends Controller
 
     public function downloadpdf (){
         // instantiate and use the dompdf class
+        $all_payments = session('all_payments');
+        $payments = $all_payments;
+
+        // return view('payments.pdf',compact('payments','all_payments'));
+
+
         $dompdf = new Dompdf();
-        $dompdf->loadHtml('test');
+        $dompdf->loadHtml(view('payments.pdf',compact('payments','all_payments')));
 
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'landscape');

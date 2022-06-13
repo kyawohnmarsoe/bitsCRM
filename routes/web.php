@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TestController;
 use Dompdf\Dompdf;
 
 
@@ -47,7 +48,8 @@ Route::post('/customers', [CustomerController::class, 'find'])->name('customers.
 Route::post('/customers/downloadpdf', [CustomerController::class, 'downloadpdf'])->name('customers.downloadpdf');
 
 Route::post('/payments', [PaymentController::class, 'find'])->name('payments.find');
-// Route::post('/payments/downloadpdf', [PaymentController::class, 'downloadpdf'])->name('payments.downloadpdf');
+Route::post('/payments/downloadpdf', [PaymentController::class, 'downloadpdf'])->name('payments.downloadpdf');
+
 
 require __DIR__.'/auth.php';
 
