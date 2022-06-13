@@ -4,7 +4,12 @@
             {{ __('Today Payments') }}
         </h2>
         <h1 class="mt-3 font-bold text-xxl text-gray-900 leading-tight">
-            {{$total}} AED
+            @if ($total)
+            {{ number_format($total) }} AED
+            @else
+            0 AED
+            @endif
+            
         </h1>
     </x-slot>
 
@@ -78,7 +83,7 @@
   
                                   @if(count($payments)<1)
                                   <tr class="bg-gray-100 border-b">
-                                    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;"> No Data Found! </td>
+                                    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style="text-align: center;"> No Data For Today! </td>
                                   </tr>
                               @endif
   

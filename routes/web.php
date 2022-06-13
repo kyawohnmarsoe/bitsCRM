@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/customers/update/{customer}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/update/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
     
+    Route::get('/payments/new/{payment}', [PaymentController::class, 'new'])->name('payments.new');
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');

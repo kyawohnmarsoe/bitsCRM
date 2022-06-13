@@ -101,8 +101,17 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function new($id)
     {
+        $customers = [Customer::where('id', $id)->first()];
+        // return $customers;
+        return view('payments.create',compact('customers'));
+    }
+
+
+    public function create()
+    {   
         $customers = Customer::orderBy('name', 'asc')->get();
         return view('payments.create',compact('customers'));
     }
@@ -145,6 +154,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit(Payment $payment)
     {
         $customers = Customer::orderBy('name', 'asc')->get();

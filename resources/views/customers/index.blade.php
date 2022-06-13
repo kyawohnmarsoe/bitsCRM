@@ -97,6 +97,11 @@
                                     <td scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Action
                                     </td>
+
+                                    <td scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+                                      Add Payment
+                                  </td>
+
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -129,6 +134,12 @@
                                             </form>
                                           
                                         </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                          <a href="{{ route('payments.new', $customer) }}" class="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                               
+                                            {{ __('+') }}
+                                      </a>
+                                      </td>
                                       </tr>
                                     @endforeach
 
