@@ -24,7 +24,7 @@
                               </a>
                             </div>
                            
-                            <div class="flex items-center justify-end " style="display: none;">
+                            <div class="flex items-center justify-end " >
                                {{-- Search Form  --}}
                               <form method="POST" action="{{ route('customers.find') }}">
                                 @method('POST')
@@ -49,7 +49,7 @@
                             {{-- Search Form  --}}
 
 
-                            <form method="POST" action="{{ route('customers.downloadpdf') }}">
+                            <form method="POST" action="{{ route('customers.downloadpdf') }}" style="display: none;">
                               @method('POST')
                               @csrf
                               <input type="hidden" value=" {{ json_encode($all_customers) }}" name="all_customers"/>
@@ -58,9 +58,7 @@
                             </x-button>
                             </form>
                             
-                            {{-- <a href="{{ route('customers.test', $customers ) }}" class="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                              {{ __('Download') }}
-                            </a> --}}
+                            
                           </div>
                               </div>
                                

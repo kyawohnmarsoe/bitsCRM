@@ -45,11 +45,24 @@ class CustomerController extends Controller
 
 
     public function downloadpdf (Request $request){
-        $all_customers = json_decode($request->input('all_customers'));
-        $customers = (object)$all_customers;
-        // return gettype($all_customers);
-        // return $all_customers;
-        return view('customers.index',compact('customers', 'all_customers'));
+        // instantiate and use the dompdf class
+        $all_payments = session('all_payments');
+        $payments = $all_payments;
+
+        // return view('payments.pdf',compact('payments','all_payments'));
+
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('payments.pdf',compact('payments','all_payments')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream();
 
     }
 

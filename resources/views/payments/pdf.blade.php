@@ -26,9 +26,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-  
-                                
-                              
+
   
                                     @foreach ($payments as $payment)
                                     <tr style="border: 1px solid;" class="bg-gray-100 border-b">
