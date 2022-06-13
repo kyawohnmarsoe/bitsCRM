@@ -141,7 +141,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone_no' => ['required', 'numeric', 'digits:17'],
+            'phone_no' => ['required', 'numeric'],
             'address' => ['required'],
         ]);
 
